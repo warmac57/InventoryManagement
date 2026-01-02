@@ -1,0 +1,116 @@
+graph TB
+    subgraph ClientWorkstations["Client Workstations"]
+        subgraph WS1["Workstation 1<br/>(Sales)"]
+            App1[Inventory Management<br/>VB.NET Application]
+            LocalCache1[Local Cache]
+        end
+        
+        subgraph WS2["Workstation 2<br/>(Purchasing)"]
+            App2[Inventory Management<br/>VB.NET Application]
+            LocalCache2[Local Cache]
+        end
+        
+        subgraph WS3["Workstation 3<br/>(Admin)"]
+            App3[Inventory Management<br/>VB.NET Application]
+            LocalCache3[Local Cache]
+        end
+    end
+    
+    subgraph ApplicationServer["Application Server<br/>(Optional - for larger deployments)"]
+        subgraph AppServices["Application Services"]
+            AuthService[Authentication Service]
+            ValidationService[Validation Service<br/>★ Stock Checks<br/>★ Cost Calculations]
+            ReportService[Report Generation Service]
+            ExportService[Data Export Service]
+        end
+        
+        subgraph BusinessRules["Business Rules Engine"]
+            RulesEngine[Settings-based Rules<br/>• In_Stock_Check<br/>• Negative_Stock_Allowed<br/>• Moving_Average_Price]
+        end
+    end
+    
+    subgraph DatabaseServer["Database Server"]
+        subgraph SQLServer["SQL Server Instance"]
+            InventoryDB[(Inventory Database)]
+            
+            subgraph DBComponents["Database Components"]
+                Tables[Tables<br/>• ITEM<br/>• ORDER_HEADER<br/>• PURCHASE_ITEM<br/>• STOCK_HISTORY<br/>• etc.]
+                
+                StoredProcs[Stored Procedures<br/>• sp_UpdateStock<br/>• sp_CalculateMovingAvg<br/>• sp_LogStockHistory<br/>• sp_ApplyCountResults]
+                
+                Triggers[Triggers<br/>• trg_OrderLine_StockCheck<br/>• trg_Purchase_CostUpdate<br/>• trg_Item_HistoryLog]
+                
+                Views[Views<br/>• vw_ItemStockStatus<br/>• vw_StockHistory<br/>• vw_OrderSummary]
+            end
+        end
+        
+        subgraph BackupSystem["Backup System"]
+            DailyBackup[Daily Full Backup]
+            TransLog[Transaction Log Backup<br/>Hourly]
+        end
+    end
+    
+    subgraph FileServer["File Server<br/>(Optional)"]
+        Reports[Generated Reports<br/>PDF/Excel]
+        Exports[Data Exports]
+        Logs[Application Logs]
+    end
+    
+    subgraph NetworkInfra["Network Infrastructure"]
+        Switch[Network Switch<br/>Gigabit Ethernet]
+        Firewall[Firewall]
+    end
+    
+    %% Connections
+    App1 -.->|ADO.NET<br/>SQL Connection| Switch
+    App2 -.->|ADO.NET<br/>SQL Connection| Switch
+    App3 -.->|ADO.NET<br/>SQL Connection| Switch
+    
+    Switch <-->|TCP/IP| DatabaseServer
+    Switch <-->|TCP/IP| ApplicationServer
+    Switch <-->|SMB/CIFS| FileServer
+    
+    App1 -.->|HTTP/REST<br/>Optional| ApplicationServer
+    App2 -.->|HTTP/REST<br/>Optional| ApplicationServer
+    App3 -.->|HTTP/REST<br/>Optional| ApplicationServer
+    
+    ValidationService -->|SQL Queries| InventoryDB
+    AuthService -->|SQL Queries| InventoryDB
+    ReportService -->|SQL Queries| InventoryDB
+    
+    RulesEngine -->|Read Settings| InventoryDB
+    ValidationService -->|Uses| RulesEngine
+    
+    StoredProcs -->|Operates on| Tables
+    Triggers -->|Auto-execute on| Tables
+    Views -->|Query| Tables
+    
+    InventoryDB -->|Backup| DailyBackup
+    InventoryDB -->|Backup| TransLog
+    
+    ReportService -->|Save| Reports
+    ExportService -->|Save| Exports
+    App1 -->|Write| Logs
+    
+    Firewall -->|Secure| Switch
+    
+    %% Deployment Notes
+    Note1[Deployment Option 1:<br/>Direct Database Connection<br/>Simple, fewer servers]
+    Note2[Deployment Option 2:<br/>App Server + Database<br/>Better scalability, centralized logic]
+    
+    %% Styling
+    style InventoryDB fill:#e1f5ff,stroke:#0066cc,stroke-width:3px
+    style ValidationService fill:#ffe1e1,stroke:#ff0000,stroke-width:2px
+    style RulesEngine fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style StoredProcs fill:#e1ffe1,stroke:#00cc00,stroke-width:2px
+    style Triggers fill:#e1ffe1,stroke:#00cc00,stroke-width:2px
+    
+    style ClientWorkstations fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style ApplicationServer fill:#f0f0ff,stroke:#333,stroke-width:2px
+    style DatabaseServer fill:#e1f5ff,stroke:#333,stroke-width:2px
+    style FileServer fill:#f0fff0,stroke:#333,stroke-width:2px
+    style NetworkInfra fill:#fff4e1,stroke:#333,stroke-width:2px
+    
+    style App1 fill:#e1f5ff
+    style App2 fill:#e1f5ff
+    style App3 fill:#e1f5ff

@@ -1,0 +1,61 @@
+classDiagram
+    %% ORDER PROCESSING
+    
+    class OrderHeader {
+        +Int32 Order_ID
+        +String Order_Number
+        +DateTime Order_Date
+        +String Customer_Name
+        +Int32 Payment_Term_ID
+        +String Order_Status
+        +Decimal Total_Amount
+        +Boolean Is_Approved
+        +SubmitOrder()
+        +ApproveOrder()
+        +UpdateStatus(status)
+    }
+
+    class OrderLine {
+        +Int32 Order_Line_ID
+        +Int32 Order_ID
+        +Int32 Item_ID
+        +Decimal Quantity
+        +Decimal Unit_Price
+        +Decimal Line_Total
+        +ValidateStock() Boolean
+        +CalculateLineTotal()
+    }
+
+    class Item {
+        +Int32 Item_ID
+        +Decimal Stock_Quantity
+        +CheckStockAvailability(qty) Boolean
+        +UpdateStock(quantity, operation)
+    }
+
+    class StoreSettings {
+        +Boolean In_Stock_Check
+        +Boolean Negative_Stock_Allowed
+        +GetSetting(name) String
+    }
+
+    class StockHistory {
+        +Int32 History_ID
+        +Int32 Item_ID
+        +DateTime Transaction_Date
+        +String Transaction_Type
+        +Decimal Quantity_Change
+        +Decimal Stock_Before
+        +Decimal Stock_After
+        +LogTransaction(item, qty, type)
+    }
+
+    OrderHeader "1" --> "*" OrderLine : contains
+    OrderLine "*" --> "1" Item : references
+    OrderLine ..> StoreSettings : validates against ★
+    OrderHeader ..> StockHistory : creates
+    Item "1" --> "*" StockHistory : tracks
+
+    note for OrderLine "★ Validation Point:\nChecks In_Stock_Check\nbefore allowing order"
+    
+    note for StockHistory "Self-Logging:\nEvery order creates\nhistory records"

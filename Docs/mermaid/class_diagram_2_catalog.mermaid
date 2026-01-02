@@ -1,0 +1,47 @@
+classDiagram
+    %% CATALOG & ITEM MANAGEMENT
+    
+    class Item {
+        +Int32 Item_ID
+        +String Item_Code
+        +String Item_Name
+        +Int32 Category_ID
+        +Int32 UoM_ID
+        +Decimal Current_Item_Cost
+        +Decimal Stock_Quantity
+        +Decimal Reorder_Level
+        +Boolean Track_Inventory
+        +CalculateMovingAverage(qty, cost)
+        +UpdateStock(quantity, operation)
+        +CheckStockAvailability(qty) Boolean
+    }
+
+    class Category {
+        +Int32 Category_ID
+        +String Category_Name
+        +String Description
+        +Int32 Parent_Category_ID
+        +GetSubCategories() List~Category~
+    }
+
+    class UnitOfMeasure {
+        +Int32 UoM_ID
+        +String UoM_Code
+        +String UoM_Name
+        +Decimal Conversion_Factor
+    }
+
+    class Supplier {
+        +Int32 Supplier_ID
+        +String Supplier_Name
+        +String Contact_Person
+        +String Email
+        +String Phone
+        +Boolean Is_Active
+    }
+
+    Item "1" --> "1" Category : belongs to
+    Item "1" --> "1" UnitOfMeasure : measured in
+    Category "1" --> "*" Category : parent-child
+
+    note for Item "Core inventory entity\nwith stock tracking"

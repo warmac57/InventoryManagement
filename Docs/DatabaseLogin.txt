@@ -1,0 +1,4 @@
+SIDELINE-LAPTOP\SQLEXPRESS
+Database:InventorySystem
+Windows Authentication
+

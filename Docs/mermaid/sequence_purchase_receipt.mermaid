@@ -1,0 +1,100 @@
+sequenceDiagram
+    actor User as Purchasing User
+    participant UI as Purchase Form
+    participant PurchHdr as PurchaseHeader
+    participant PurchItem as PurchaseItem
+    participant Settings as StoreSettings
+    participant Item as Item
+    participant History as StockHistory
+    
+    Note over User,History: Purchase Receipt Flow with ★ Cost Calculation
+    
+    User->>UI: Create Purchase Order
+    UI->>User: Display Purchase Form
+    
+    User->>UI: Enter Purchase Details
+    UI->>PurchHdr: Create Purchase Header
+    Note right of UI: Supplier, Date, PO Number
+    
+    loop For Each Item
+        User->>UI: Add Item to Purchase
+        UI->>PurchItem: Create Purchase Item
+        PurchItem->>Item: Get Item Details
+        Item-->>PurchItem: Return Item Info
+        
+        User->>UI: Enter Quantity & Unit Cost
+        PurchItem->>PurchItem: CalculateLineTotal()
+        PurchItem-->>UI: ✓ Line Added
+    end
+    
+    User->>UI: Save Purchase Order
+    UI->>PurchHdr: Save()
+    PurchHdr-->>UI: Purchase Order Created
+    
+    Note over User,History: Receipt Processing
+    
+    User->>UI: Receive Purchase
+    UI->>PurchHdr: ReceivePurchase()
+    PurchHdr->>PurchHdr: Set Is_Received = TRUE
+    
+    loop For Each Purchase Item
+        PurchHdr->>PurchItem: ProcessReceipt()
+        
+        Note over PurchItem,Settings: ★ CRITICAL VALIDATION POINT
+        PurchItem->>Settings: Get Moving_Average_Price Setting
+        Settings-->>PurchItem: Return Setting Value
+        
+        PurchItem->>Item: Get Current Stock & Cost
+        Item-->>PurchItem: Stock_Quantity, Current_Item_Cost
+        
+        alt Moving_Average_Price = TRUE
+            Note over PurchItem,Item: ★ COST CALCULATION POINT
+            PurchItem->>PurchItem: Calculate Moving Average
+            activate PurchItem
+            Note right of PurchItem: Formula:<br/>New Cost = <br/>[(Current Stock × Current Cost) + <br/>(Receipt Qty × Receipt Cost)] ÷ <br/>(Current Stock + Receipt Qty)
+            
+            PurchItem->>PurchItem: Old Value = Current Stock × Current Cost
+            PurchItem->>PurchItem: New Value = Receipt Qty × Unit Cost
+            PurchItem->>PurchItem: Total Value = Old Value + New Value
+            PurchItem->>PurchItem: Total Qty = Current Stock + Receipt Qty
+            PurchItem->>PurchItem: New Average = Total Value ÷ Total Qty
+            deactivate PurchItem
+            
+            PurchItem->>Item: UpdateItemCost(New Average)
+            Item->>Item: Current_Item_Cost = New Average
+            Note right of Item: ✓ Moving Average Applied
+        else Moving_Average_Price = FALSE
+            Note right of PurchItem: Keep existing cost<br/>No recalculation
+        end
+        
+        Note over Item,History: Stock Update Process
+        
+        PurchItem->>Item: Get Stock Before Receipt
+        Item-->>PurchItem: Stock_Before
+        
+        PurchItem->>Item: UpdateStock(+Quantity, "Purchase")
+        Item->>Item: Stock_Quantity += Quantity
+        Item->>Item: Calculate Stock_After
+        
+        Note over Item,History: ★ SELF-LOGGING MECHANISM
+        Item->>History: LogTransaction()
+        activate History
+        History->>History: Set Transaction_Type = "Stock Entry"
+        History->>History: Set Reference_Type = "Purchase"
+        History->>History: Set Reference_ID = Purchase_ID
+        History->>History: Set Quantity_Change = +Quantity
+        History->>History: Set Stock_Before
+        History->>History: Set Stock_After
+        History->>History: Set Unit_Cost = Receipt Cost
+        History->>History: Save Record
+        deactivate History
+        
+        Item-->>PurchItem: Stock & Cost Updated
+        PurchItem-->>PurchHdr: Item Processed
+    end
+    
+    PurchHdr->>PurchHdr: Set Purchase_Status = "Received"
+    PurchHdr-->>UI: Receipt Complete
+    UI-->>User: ✓ Purchase Received Successfully
+    
+    Note over User,History: All stock movements and cost<br/>changes logged in STOCK_HISTORY

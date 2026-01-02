@@ -1,0 +1,148 @@
+graph TB
+    subgraph PresentationLayer["Presentation Layer (Windows Forms)"]
+        LoginForm[Login Form]
+        MainMenu[Main Menu Form]
+        
+        subgraph AdminForms["Administration Forms"]
+            SettingsForm[Store Settings Form]
+            LOVForm[LOV Management Form]
+        end
+        
+        subgraph InventoryForms["Inventory Forms"]
+            ItemForm[Item Management Form]
+            CategoryForm[Category Form]
+            SupplierForm[Supplier Form]
+        end
+        
+        subgraph OrderForms["Order Processing Forms"]
+            OrderForm[Order Entry Form]
+            OrderApprovalForm[Order Approval Form]
+        end
+        
+        subgraph PurchaseForms["Purchase Forms"]
+            PurchaseForm[Purchase Entry Form]
+            ReceiptForm[Receipt Processing Form]
+        end
+        
+        subgraph CountForms["Inventory Control Forms"]
+            CountForm[Inventory Count Form]
+            AdjustmentForm[Stock Adjustment Form]
+            HistoryForm[Stock History Form]
+        end
+    end
+    
+    subgraph BusinessLayer["Business Logic Layer (VB.NET Classes)"]
+        subgraph CoreManagers["Core Business Managers"]
+            AuthMgr[Authentication Manager]
+            SettingsMgr[Settings Manager]
+            LOVMgr[LOV Manager]
+        end
+        
+        subgraph InventoryManagers["Inventory Managers"]
+            ItemMgr[Item Manager]
+            CategoryMgr[Category Manager]
+            SupplierMgr[Supplier Manager]
+        end
+        
+        subgraph OrderManagers["Order Managers"]
+            OrderMgr[Order Manager]
+            OrderLineMgr[Order Line Manager]
+            PaymentMgr[Payment Term Manager]
+        end
+        
+        subgraph PurchaseManagers["Purchase Managers"]
+            PurchaseMgr[Purchase Manager]
+            PurchaseItemMgr[Purchase Item Manager]
+        end
+        
+        subgraph StockManagers["Stock Control Managers"]
+            StockMgr[Stock Manager]
+            CountMgr[Count Manager]
+            HistoryMgr[History Manager]
+        end
+        
+        subgraph ValidationEngine["★ Validation Engine"]
+            StockValidator[Stock Validator<br/>• In_Stock_Check<br/>• Negative_Stock_Allowed]
+            CostCalculator[Cost Calculator<br/>• Moving_Average_Price<br/>• Cost Recalculation]
+        end
+    end
+    
+    subgraph DataLayer["Data Access Layer"]
+        subgraph DAOs["Data Access Objects"]
+            UserDAO[User DAO]
+            SettingsDAO[Settings DAO]
+            LOVDAO[LOV DAO]
+            ItemDAO[Item DAO]
+            OrderDAO[Order DAO]
+            PurchaseDAO[Purchase DAO]
+            HistoryDAO[History DAO]
+        end
+        
+        DBContext[Database Context<br/>Connection Manager]
+    end
+    
+    subgraph DatabaseLayer["Database Layer"]
+        Database[(SQL Server Database<br/>Inventory DB)]
+    end
+    
+    %% Presentation to Business Layer Connections
+    LoginForm --> AuthMgr
+    SettingsForm --> SettingsMgr
+    LOVForm --> LOVMgr
+    ItemForm --> ItemMgr
+    CategoryForm --> CategoryMgr
+    SupplierForm --> SupplierMgr
+    OrderForm --> OrderMgr
+    OrderForm --> OrderLineMgr
+    OrderApprovalForm --> OrderMgr
+    PurchaseForm --> PurchaseMgr
+    ReceiptForm --> PurchaseItemMgr
+    CountForm --> CountMgr
+    AdjustmentForm --> StockMgr
+    HistoryForm --> HistoryMgr
+    
+    %% Business Layer Internal Dependencies
+    OrderLineMgr --> StockValidator
+    PurchaseItemMgr --> CostCalculator
+    CountMgr --> StockValidator
+    
+    StockValidator --> SettingsMgr
+    CostCalculator --> SettingsMgr
+    
+    OrderMgr --> StockMgr
+    PurchaseItemMgr --> StockMgr
+    CountMgr --> StockMgr
+    
+    StockMgr --> HistoryMgr
+    
+    %% Business to Data Layer Connections
+    AuthMgr --> UserDAO
+    SettingsMgr --> SettingsDAO
+    LOVMgr --> LOVDAO
+    ItemMgr --> ItemDAO
+    OrderMgr --> OrderDAO
+    PurchaseMgr --> PurchaseDAO
+    HistoryMgr --> HistoryDAO
+    
+    %% Data Layer to Database
+    UserDAO --> DBContext
+    SettingsDAO --> DBContext
+    LOVDAO --> DBContext
+    ItemDAO --> DBContext
+    OrderDAO --> DBContext
+    PurchaseDAO --> DBContext
+    HistoryDAO --> DBContext
+    
+    DBContext --> Database
+    
+    %% Styling
+    style ValidationEngine fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    style StockValidator fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style CostCalculator fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style Database fill:#e1f5ff,stroke:#0066cc,stroke-width:3px
+    style DBContext fill:#e1ffe1,stroke:#00cc00,stroke-width:2px
+    
+    style PresentationLayer fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style BusinessLayer fill:#f0f0ff,stroke:#333,stroke-width:2px
+    style DataLayer fill:#f0fff0,stroke:#333,stroke-width:2px
+    style DatabaseLayer fill:#e1f5ff,stroke:#333,stroke-width:2px

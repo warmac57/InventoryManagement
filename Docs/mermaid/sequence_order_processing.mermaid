@@ -1,0 +1,98 @@
+sequenceDiagram
+    actor User as Sales User
+    participant UI as Order Entry Form
+    participant OrderHdr as OrderHeader
+    participant OrderLn as OrderLine
+    participant Settings as StoreSettings
+    participant Item as Item
+    participant History as StockHistory
+    
+    Note over User,History: Order Processing Flow with ★ Validation Points
+    
+    User->>UI: Create New Order
+    UI->>User: Display Order Form
+    
+    User->>UI: Enter Order Details
+    UI->>OrderHdr: Create Order Header
+    Note right of UI: Customer, Date, Terms
+    
+    User->>UI: Select Payment Term
+    UI->>Settings: Get Payment Terms (LOV)
+    Settings-->>UI: Return Available Terms
+    UI->>OrderHdr: Set Payment Term ★
+    
+    loop For Each Item
+        User->>UI: Add Item to Order
+        UI->>OrderLn: Create Order Line
+        OrderLn->>Item: Get Item Details
+        Item-->>OrderLn: Return Item Info
+        
+        User->>UI: Enter Quantity
+        
+        Note over OrderLn,Settings: ★ CRITICAL VALIDATION POINT
+        OrderLn->>Settings: Get In_Stock_Check Setting
+        Settings-->>OrderLn: Return Setting Value
+        
+        alt In_Stock_Check = TRUE
+            OrderLn->>Item: CheckStockAvailability(Quantity)
+            Item-->>OrderLn: Stock Available?
+            
+            alt Stock Insufficient
+                OrderLn-->>UI: ❌ Validation Failed
+                UI-->>User: Error: Insufficient Stock
+                Note right of User: Order Line Rejected
+            else Stock Sufficient
+                OrderLn->>OrderLn: CalculateLineTotal()
+                OrderLn-->>UI: ✓ Line Added
+            end
+        else In_Stock_Check = FALSE
+            Note right of OrderLn: Allow Negative Stock
+            OrderLn->>Settings: Get Negative_Stock_Allowed
+            Settings-->>OrderLn: TRUE
+            OrderLn->>OrderLn: CalculateLineTotal()
+            OrderLn-->>UI: ✓ Line Added
+        end
+    end
+    
+    User->>UI: Submit Order
+    UI->>OrderHdr: SubmitOrder()
+    OrderHdr->>OrderHdr: Calculate Total Amount
+    OrderHdr-->>UI: Order Submitted
+    
+    Note over User,History: Order Approval Process
+    
+    User->>UI: Request Order Approval
+    UI->>OrderHdr: ApproveOrder()
+    OrderHdr->>OrderHdr: Set Is_Approved = TRUE
+    OrderHdr->>OrderHdr: Set Order_Status = "Ready"
+    
+    Note over OrderHdr,History: Stock Update Process
+    
+    loop For Each Order Line
+        OrderHdr->>OrderLn: Process Line Item
+        OrderLn->>Item: Get Current Stock
+        Item-->>OrderLn: Stock_Quantity
+        
+        OrderLn->>Item: UpdateStock(-Quantity, "Sale")
+        Item->>Item: Stock_Quantity -= Quantity
+        Item->>Item: Calculate Stock_After
+        
+        Note over Item,History: ★ SELF-LOGGING MECHANISM
+        Item->>History: LogTransaction()
+        Note right of History: Creates STOCK_HISTORY record
+        activate History
+        History->>History: Set Transaction_Type = "Stock Exit"
+        History->>History: Set Reference_Type = "Order"
+        History->>History: Set Reference_ID = Order_ID
+        History->>History: Set Quantity_Change = -Quantity
+        History->>History: Set Stock_Before
+        History->>History: Set Stock_After
+        History->>History: Save Record
+        deactivate History
+        
+        Item-->>OrderLn: Stock Updated
+    end
+    
+    OrderHdr->>OrderHdr: Set Order_Status = "Delivered"
+    OrderHdr-->>UI: Order Complete
+    UI-->>User: ✓ Order Processed Successfully

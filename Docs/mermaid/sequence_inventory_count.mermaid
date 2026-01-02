@@ -1,0 +1,105 @@
+sequenceDiagram
+    actor User as Inventory Manager
+    participant UI as Inventory Count Form
+    participant Count as InventoryCount
+    participant Item as Item
+    participant History as StockHistory
+    participant Settings as StoreSettings
+    
+    Note over User,Settings: Inventory Count Flow with Variance Analysis
+    
+    User->>UI: Initiate Physical Count
+    UI->>User: Display Count Form
+    
+    User->>UI: Select Items to Count
+    
+    loop For Each Item to Count
+        UI->>Item: Get Current System Quantity
+        Item-->>UI: Return Stock_Quantity
+        
+        UI->>Count: Create Count Record
+        Count->>Count: Set System_Quantity = Stock_Quantity
+        Count->>Count: Set Count_Date = Now
+        Count->>Count: Set Count_Status = "In Progress"
+        
+        User->>UI: Enter Quantity_Counted
+        UI->>Count: Set Quantity_Counted
+        
+        Note over Count: ★ VARIANCE CALCULATION
+        Count->>Count: CalculateVariance()
+        activate Count
+        Count->>Count: Quantity_Change = Counted - System
+        Count->>Item: Get Current_Item_Cost
+        Item-->>Count: Unit Cost
+        Count->>Count: Variance_Value = Quantity_Change × Cost
+        deactivate Count
+        
+        alt Quantity_Change ≠ 0
+            Count->>UI: Show Variance Warning
+            UI->>User: Display Variance Details
+            Note right of User: Review before approval
+        end
+        
+        Count-->>UI: Count Record Ready
+    end
+    
+    User->>UI: Review All Variances
+    UI->>User: Display Summary Report
+    
+    User->>UI: Approve Count Results
+    
+    loop For Each Count Record
+        UI->>Count: ApplyCountResults()
+        
+        alt Quantity_Change > 0
+            Note right of Count: Stock Increase
+            Count->>Item: UpdateStock(+Quantity_Change, "Count Adj")
+            Item->>Item: Stock_Quantity += Quantity_Change
+            
+        else Quantity_Change < 0
+            Note right of Count: Stock Decrease
+            
+            Note over Count,Settings: ★ VALIDATION CHECK
+            Count->>Settings: Get Negative_Stock_Allowed
+            Settings-->>Count: Setting Value
+            
+            alt Would Result in Negative Stock
+                Count->>Item: Get Stock_Quantity
+                Item-->>Count: Current Stock
+                Count->>Count: Check: Stock + Change >= 0?
+                
+                alt Negative Stock Not Allowed AND Result < 0
+                    Count-->>UI: ❌ Adjustment Rejected
+                    UI-->>User: Error: Cannot create negative stock
+                    Note right of User: Count record flagged
+                else Adjustment Allowed
+                    Count->>Item: UpdateStock(Quantity_Change, "Count Adj")
+                    Item->>Item: Stock_Quantity += Quantity_Change
+                end
+            else No Negative Stock Issue
+                Count->>Item: UpdateStock(Quantity_Change, "Count Adj")
+                Item->>Item: Stock_Quantity += Quantity_Change
+            end
+        end
+        
+        Note over Item,History: ★ SELF-LOGGING MECHANISM
+        Item->>History: LogTransaction()
+        activate History
+        History->>History: Set Transaction_Type = "Inventory Count"
+        History->>History: Set Reference_Type = "Count"
+        History->>History: Set Reference_ID = Count_ID
+        History->>History: Set Quantity_Change
+        History->>History: Set Stock_Before = System_Quantity
+        History->>History: Set Stock_After = Quantity_Counted
+        History->>History: Set Notes = "Variance: " & Variance_Value
+        History->>History: Save Record
+        deactivate History
+        
+        Count->>Count: Set Count_Status = "Applied"
+        Count->>Count: Set Counted_By_User_ID
+        Count-->>UI: Adjustment Complete
+    end
+    
+    UI-->>User: ✓ Inventory Count Applied
+    
+    Note over User,History: All adjustments logged with<br/>before/after quantities and variance values

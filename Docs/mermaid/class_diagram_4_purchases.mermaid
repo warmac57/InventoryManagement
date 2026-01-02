@@ -1,0 +1,63 @@
+classDiagram
+    %% PURCHASE & RECEIVING
+    
+    class PurchaseHeader {
+        +Int32 Purchase_ID
+        +String Purchase_Number
+        +DateTime Purchase_Date
+        +Int32 Supplier_ID
+        +String Purchase_Status
+        +Decimal Total_Amount
+        +Boolean Is_Received
+        +ReceivePurchase()
+    }
+
+    class PurchaseItem {
+        +Int32 Purchase_Item_ID
+        +Int32 Purchase_ID
+        +Int32 Item_ID
+        +Decimal Quantity
+        +Decimal Unit_Cost
+        +Decimal Line_Total
+        +ProcessReceipt()
+        +UpdateItemCost()
+    }
+
+    class Supplier {
+        +Int32 Supplier_ID
+        +String Supplier_Name
+        +String Contact_Person
+    }
+
+    class Item {
+        +Int32 Item_ID
+        +Decimal Current_Item_Cost
+        +Decimal Stock_Quantity
+        +CalculateMovingAverage(qty, cost)
+        +UpdateStock(quantity, operation)
+    }
+
+    class StoreSettings {
+        +Boolean Moving_Average_Price
+        +GetSetting(name) String
+    }
+
+    class StockHistory {
+        +Int32 History_ID
+        +Int32 Item_ID
+        +String Transaction_Type
+        +Decimal Quantity_Change
+        +Decimal Unit_Cost
+        +LogTransaction(item, qty, type)
+    }
+
+    PurchaseHeader "1" --> "*" PurchaseItem : contains
+    PurchaseHeader "*" --> "1" Supplier : from
+    PurchaseItem "*" --> "1" Item : references
+    PurchaseItem ..> StoreSettings : uses for pricing ★
+    PurchaseItem ..> StockHistory : creates
+    Item "1" --> "*" StockHistory : tracks
+
+    note for PurchaseItem "★ Calculation Point:\nRecalculates Current_Item_Cost\nif Moving_Average_Price enabled"
+    
+    note for StockHistory "Self-Logging:\nReceipts create\nhistory records"

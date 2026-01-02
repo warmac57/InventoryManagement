@@ -1,0 +1,57 @@
+classDiagram
+    %% INVENTORY CONTROL
+    
+    class InventoryCount {
+        +Int32 Count_ID
+        +DateTime Count_Date
+        +Int32 Item_ID
+        +Decimal System_Quantity
+        +Decimal Quantity_Counted
+        +Decimal Quantity_Change
+        +Decimal Variance_Value
+        +String Count_Status
+        +Int32 Counted_By_User_ID
+        +CalculateVariance()
+        +ApplyCountResults()
+    }
+
+    class Item {
+        +Int32 Item_ID
+        +Decimal Stock_Quantity
+        +Decimal Current_Item_Cost
+        +UpdateStock(quantity, operation)
+    }
+
+    class StockHistory {
+        +Int32 History_ID
+        +Int32 Item_ID
+        +DateTime Transaction_Date
+        +String Transaction_Type
+        +Int32 Reference_ID
+        +String Reference_Type
+        +Decimal Quantity_Change
+        +Decimal Stock_Before
+        +Decimal Stock_After
+        +String Notes
+        +LogTransaction(item, qty, type)
+    }
+
+    class StoreSettings {
+        +Boolean Negative_Stock_Allowed
+        +GetSetting(name) String
+    }
+
+    class User {
+        +Int32 User_ID
+        +String Username
+    }
+
+    InventoryCount "*" --> "1" Item : counts
+    InventoryCount "*" --> "1" User : counted by
+    InventoryCount ..> StockHistory : creates ★
+    InventoryCount ..> StoreSettings : validates against ★
+    Item "1" --> "*" StockHistory : tracks
+
+    note for InventoryCount "★ Validation Point:\nChecks Negative_Stock_Allowed\nbefore applying adjustments"
+    
+    note for StockHistory "Self-Logging:\nCount adjustments create\nhistory with variance notes"

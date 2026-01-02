@@ -1,0 +1,74 @@
+graph TD
+    Start([Purchase Item Received]) --> A[Get Purchase Item Details]
+    A --> B[Receipt Qty, Receipt Unit Cost]
+    
+    B --> C{★ Check Store Setting:<br/>Moving_Average_Price?}
+    
+    C -->|FALSE| D[Keep Existing Item Cost]
+    D --> E[Update Stock Quantity Only]
+    E --> F[Stock = Current + Receipt Qty]
+    F --> End1([Receipt Complete])
+    
+    C -->|TRUE| G[Get Current Item Data]
+    G --> H[Current Stock Qty<br/>Current Item Cost]
+    
+    H --> I{Current Stock > 0?}
+    
+    I -->|NO - First Receipt| J[New Cost = Receipt Unit Cost]
+    J --> K[Set Item.Current_Item_Cost]
+    K --> L[Update Stock Quantity]
+    L --> F
+    
+    I -->|YES - Calculate Average| M[★ Moving Average Formula]
+    
+    M --> N[Calculate Current Inventory Value]
+    N --> O[Current Value =<br/>Current Stock × Current Cost]
+    
+    O --> P[Calculate Receipt Value]
+    P --> Q[Receipt Value =<br/>Receipt Qty × Receipt Cost]
+    
+    Q --> R[Calculate Total Value]
+    R --> S[Total Value =<br/>Current Value + Receipt Value]
+    
+    S --> T[Calculate Total Quantity]
+    T --> U[Total Qty =<br/>Current Stock + Receipt Qty]
+    
+    U --> V[Calculate New Average]
+    V --> W[New Average Cost =<br/>Total Value ÷ Total Qty]
+    
+    W --> X{Sanity Check:<br/>Cost Reasonable?}
+    
+    X -->|YES| Y[✓ Update Item Cost]
+    Y --> Z[Item.Current_Item_Cost = New Average]
+    Z --> L
+    
+    X -->|NO| AA[❌ Cost Anomaly Detected]
+    AA --> AB[Log Warning]
+    AB --> AC{User Override?}
+    AC -->|Approve| Y
+    AC -->|Reject| AD[Keep Current Cost]
+    AD --> L
+    
+    L --> AE[Create Stock History Record]
+    AE --> AF[Log: Type=Stock Entry<br/>Qty Change=+Receipt Qty<br/>Cost=Receipt Cost]
+    AF --> End1
+    
+    style C fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    style M fill:#fff4e1,stroke:#ffa500,stroke-width:3px
+    style N fill:#e1f5ff
+    style O fill:#e1f5ff
+    style P fill:#e1f5ff
+    style Q fill:#e1f5ff
+    style R fill:#e1f5ff
+    style S fill:#e1f5ff
+    style T fill:#e1f5ff
+    style U fill:#e1f5ff
+    style V fill:#e1f5ff
+    style W fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style Y fill:#e1ffe1,stroke:#00ff00,stroke-width:2px
+    style AA fill:#ffe1e1,stroke:#ff0000,stroke-width:2px
+    style J fill:#e1ffe1
+    
+    classDef calculation fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    classDef validation fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    classDef formula fill:#fff4e1,stroke:#ffa500,stroke-width:3px

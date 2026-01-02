@@ -1,0 +1,203 @@
+erDiagram
+    USER ||--o{ INVENTORY_COUNT : "performs"
+    USER {
+        int User_ID PK
+        string Username UK
+        string Password_Hash
+        string Role
+        boolean Is_Active
+        datetime Created_Date
+        datetime Last_Login
+    }
+    
+    STORE_SETTINGS {
+        int Setting_ID PK
+        string Setting_Name UK
+        string Setting_Value
+        string Data_Type
+        string Description
+        datetime Modified_Date
+        int Modified_By_User_ID FK
+    }
+    
+    LOV ||--o{ ORDER_HEADER : "payment_term"
+    LOV ||--o{ ORDER_HEADER : "currency"
+    LOV {
+        int LOV_ID PK
+        string LOV_Type
+        string LOV_Code UK
+        string LOV_Value
+        int Display_Order
+        boolean Is_Active
+    }
+    
+    CATEGORY ||--o{ CATEGORY : "parent_category"
+    CATEGORY ||--o{ ITEM : "categorizes"
+    CATEGORY {
+        int Category_ID PK
+        string Category_Name UK
+        string Description
+        int Parent_Category_ID FK
+        boolean Is_Active
+    }
+    
+    UNIT_OF_MEASURE ||--o{ ITEM : "measures"
+    UNIT_OF_MEASURE {
+        int UoM_ID PK
+        string UoM_Code UK
+        string UoM_Name
+        decimal Conversion_Factor
+        boolean Is_Active
+    }
+    
+    ITEM ||--o{ ORDER_LINE : "contains"
+    ITEM ||--o{ PURCHASE_ITEM : "contains"
+    ITEM ||--o{ STOCK_HISTORY : "tracks"
+    ITEM ||--o{ INVENTORY_COUNT : "counted"
+    ITEM {
+        int Item_ID PK
+        string Item_Code UK
+        string Item_Name
+        string Description
+        int Category_ID FK
+        int UoM_ID FK
+        decimal Current_Item_Cost
+        decimal Stock_Quantity
+        decimal Reorder_Level
+        decimal Min_Stock_Level
+        decimal Max_Stock_Level
+        boolean Track_Inventory
+        boolean Is_Active
+        datetime Created_Date
+        datetime Modified_Date
+    }
+    
+    SUPPLIER ||--o{ PURCHASE_HEADER : "supplies"
+    SUPPLIER {
+        int Supplier_ID PK
+        string Supplier_Code UK
+        string Supplier_Name
+        string Contact_Person
+        string Email
+        string Phone
+        string Address
+        string City
+        string State
+        string Zip_Code
+        string Country
+        boolean Is_Active
+        datetime Created_Date
+    }
+    
+    PAYMENT_TERM ||--o{ ORDER_HEADER : "defines_terms"
+    PAYMENT_TERM {
+        int Payment_Term_ID PK
+        string Term_Code UK
+        string Term_Description
+        int Days_Due
+        decimal Discount_Percent
+        int Discount_Days
+        boolean Is_Active
+    }
+    
+    ORDER_HEADER ||--o{ ORDER_LINE : "contains"
+    ORDER_HEADER {
+        int Order_ID PK
+        string Order_Number UK
+        datetime Order_Date
+        int Customer_ID
+        string Customer_Name
+        string Customer_Contact
+        int Payment_Term_ID FK
+        string Payment_Method FK
+        string Currency FK
+        string Order_Status
+        decimal Subtotal
+        decimal Tax_Amount
+        decimal Total_Amount
+        datetime Delivery_Date
+        string Delivery_Address
+        string Notes
+        boolean Is_Approved
+        int Approved_By_User_ID FK
+        datetime Approved_Date
+        datetime Created_Date
+        int Created_By_User_ID FK
+    }
+    
+    ORDER_LINE {
+        int Order_Line_ID PK
+        int Order_ID FK
+        int Line_Number
+        int Item_ID FK
+        decimal Quantity
+        decimal Unit_Price
+        decimal Discount_Percent
+        decimal Line_Total
+        string Notes
+        datetime Created_Date
+    }
+    
+    PURCHASE_HEADER ||--o{ PURCHASE_ITEM : "contains"
+    PURCHASE_HEADER {
+        int Purchase_ID PK
+        string Purchase_Number UK
+        datetime Purchase_Date
+        int Supplier_ID FK
+        string Purchase_Status
+        decimal Subtotal
+        decimal Tax_Amount
+        decimal Total_Amount
+        datetime Expected_Date
+        datetime Received_Date
+        string Notes
+        boolean Is_Received
+        int Received_By_User_ID FK
+        datetime Created_Date
+        int Created_By_User_ID FK
+    }
+    
+    PURCHASE_ITEM {
+        int Purchase_Item_ID PK
+        int Purchase_ID FK
+        int Line_Number
+        int Item_ID FK
+        decimal Quantity
+        decimal Unit_Cost
+        decimal Line_Total
+        string Notes
+        datetime Created_Date
+    }
+    
+    STOCK_HISTORY {
+        int History_ID PK
+        int Item_ID FK
+        datetime Transaction_Date
+        string Transaction_Type
+        int Reference_ID
+        string Reference_Type
+        decimal Quantity_Change
+        decimal Stock_Before
+        decimal Stock_After
+        decimal Unit_Cost
+        int User_ID FK
+        string Notes
+        datetime Created_Date
+    }
+    
+    INVENTORY_COUNT {
+        int Count_ID PK
+        datetime Count_Date
+        int Item_ID FK
+        decimal System_Quantity
+        decimal Quantity_Counted
+        decimal Quantity_Change
+        decimal Unit_Cost
+        decimal Variance_Value
+        string Count_Status
+        int Counted_By_User_ID FK
+        int Approved_By_User_ID FK
+        datetime Approved_Date
+        string Notes
+        datetime Created_Date
+    }

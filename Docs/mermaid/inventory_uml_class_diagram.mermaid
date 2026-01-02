@@ -1,0 +1,201 @@
+classDiagram
+    %% Core Administration & Configuration
+    class User {
+        +Int32 User_ID
+        +String Username
+        +String Password_Hash
+        +String Role
+        +Boolean Is_Active
+        +Login() Boolean
+        +Logout()
+    }
+
+    class StoreSettings {
+        +Int32 Setting_ID
+        +String Setting_Name
+        +String Setting_Value
+        +String Data_Type
+        +Boolean Negative_Stock_Allowed
+        +Boolean In_Stock_Check
+        +Boolean Moving_Average_Price
+        +GetSetting(name) String
+        +UpdateSetting(name, value)
+    }
+
+    class LOV {
+        +Int32 LOV_ID
+        +String LOV_Type
+        +String LOV_Code
+        +String LOV_Value
+        +Int32 Display_Order
+        +Boolean Is_Active
+        +GetByType(type) List~LOV~
+    }
+
+    %% Item & Catalog Management
+    class Item {
+        +Int32 Item_ID
+        +String Item_Code
+        +String Item_Name
+        +String Description
+        +Int32 Category_ID
+        +Int32 UoM_ID
+        +Decimal Current_Item_Cost
+        +Decimal Stock_Quantity
+        +Decimal Reorder_Level
+        +Boolean Track_Inventory
+        +CalculateMovingAverage(qty, cost)
+        +UpdateStock(quantity, operation)
+        +CheckStockAvailability(qty) Boolean
+    }
+
+    class Category {
+        +Int32 Category_ID
+        +String Category_Name
+        +String Description
+        +Int32 Parent_Category_ID
+        +GetSubCategories() List~Category~
+    }
+
+    class UnitOfMeasure {
+        +Int32 UoM_ID
+        +String UoM_Code
+        +String UoM_Name
+        +Decimal Conversion_Factor
+    }
+
+    %% Supplier Management
+    class Supplier {
+        +Int32 Supplier_ID
+        +String Supplier_Name
+        +String Contact_Person
+        +String Email
+        +String Phone
+        +String Address
+        +Boolean Is_Active
+    }
+
+    %% Order Processing
+    class OrderHeader {
+        +Int32 Order_ID
+        +String Order_Number
+        +DateTime Order_Date
+        +Int32 Customer_ID
+        +String Customer_Name
+        +Int32 Payment_Term_ID
+        +String Payment_Method
+        +String Currency
+        +String Order_Status
+        +Decimal Total_Amount
+        +DateTime Delivery_Date
+        +Boolean Is_Approved
+        +SubmitOrder()
+        +ApproveOrder()
+        +UpdateStatus(status)
+    }
+
+    class OrderLine {
+        +Int32 Order_Line_ID
+        +Int32 Order_ID
+        +Int32 Item_ID
+        +Decimal Quantity
+        +Decimal Unit_Price
+        +Decimal Line_Total
+        +String Notes
+        +ValidateStock() Boolean
+        +CalculateLineTotal()
+    }
+
+    class PaymentTerm {
+        +Int32 Payment_Term_ID
+        +String Term_Code
+        +String Term_Description
+        +Int32 Days_Due
+        +Decimal Discount_Percent
+        +Boolean Is_Active
+    }
+
+    %% Purchase & Inventory
+    class PurchaseHeader {
+        +Int32 Purchase_ID
+        +String Purchase_Number
+        +DateTime Purchase_Date
+        +Int32 Supplier_ID
+        +String Purchase_Status
+        +Decimal Total_Amount
+        +Boolean Is_Received
+        +ReceivePurchase()
+    }
+
+    class PurchaseItem {
+        +Int32 Purchase_Item_ID
+        +Int32 Purchase_ID
+        +Int32 Item_ID
+        +Decimal Quantity
+        +Decimal Unit_Cost
+        +Decimal Line_Total
+        +ProcessReceipt()
+        +UpdateItemCost()
+    }
+
+    class StockHistory {
+        +Int32 History_ID
+        +Int32 Item_ID
+        +DateTime Transaction_Date
+        +String Transaction_Type
+        +Int32 Reference_ID
+        +String Reference_Type
+        +Decimal Quantity_Change
+        +Decimal Stock_Before
+        +Decimal Stock_After
+        +Decimal Unit_Cost
+        +String Notes
+        +LogTransaction(item, qty, type)
+    }
+
+    class InventoryCount {
+        +Int32 Count_ID
+        +DateTime Count_Date
+        +Int32 Item_ID
+        +Decimal System_Quantity
+        +Decimal Quantity_Counted
+        +Decimal Quantity_Change
+        +Decimal Variance_Value
+        +String Count_Status
+        +Int32 Counted_By_User_ID
+        +String Notes
+        +CalculateVariance()
+        +ApplyCountResults()
+    }
+
+    %% Relationships
+    Item "1" --> "*" Category : belongs to
+    Item "1" --> "1" UnitOfMeasure : measured in
+    Item "1" --> "*" StockHistory : tracks
+    
+    OrderHeader "1" --> "*" OrderLine : contains
+    OrderHeader "*" --> "1" PaymentTerm : uses
+    OrderLine "*" --> "1" Item : references
+    
+    PurchaseHeader "1" --> "*" PurchaseItem : contains
+    PurchaseHeader "*" --> "1" Supplier : from
+    PurchaseItem "*" --> "1" Item : references
+    
+    InventoryCount "*" --> "1" Item : counts
+    InventoryCount "*" --> "1" User : counted by
+    
+    StockHistory "*" --> "1" Item : tracks
+    
+    OrderHeader ..> StockHistory : creates ★
+    PurchaseItem ..> StockHistory : creates ★
+    InventoryCount ..> StockHistory : creates ★
+    
+    OrderLine ..> StoreSettings : validates against ★
+    PurchaseItem ..> StoreSettings : uses for pricing ★
+
+    note for OrderLine "★ Validation Point:\nChecks In_Stock_Check setting\nbefore allowing negative stock"
+    
+    note for PurchaseItem "★ Calculation Point:\nRecalculates Current_Item_Cost\nif Moving_Average_Price enabled"
+    
+    note for StockHistory "Self-Logging Mechanism:\nEvery transaction creates\na history record"
+

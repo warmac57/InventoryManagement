@@ -1,0 +1,45 @@
+graph TD
+    Start([User Adds Item to Order]) --> A[Enter Item and Quantity]
+    A --> B[Create Order Line Object]
+    
+    B --> C{★ Check Store Setting:<br/>In_Stock_Check?}
+    
+    C -->|TRUE| D[Get Item.Stock_Quantity]
+    D --> E{Requested Qty ≤<br/>Available Stock?}
+    
+    E -->|YES| F[✓ Stock Sufficient]
+    F --> G[Calculate Line Total]
+    G --> H[Add Line to Order]
+    H --> Success([Order Line Added])
+    
+    E -->|NO| I[❌ Stock Insufficient]
+    I --> J[Display Error Message]
+    J --> K{User Action?}
+    
+    K -->|Reduce Quantity| A
+    K -->|Cancel Line| Cancel([Line Cancelled])
+    K -->|Check Setting| L[Admin: Change In_Stock_Check]
+    L --> C
+    
+    C -->|FALSE| M{★ Check Store Setting:<br/>Negative_Stock_Allowed?}
+    
+    M -->|TRUE| N[✓ Allow Negative Stock]
+    N --> G
+    
+    M -->|FALSE| O[❌ Configuration Error]
+    O --> P[Display System Error]
+    P --> Q([Contact Administrator])
+    
+    style C fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    style M fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    style E fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style F fill:#e1ffe1,stroke:#00ff00,stroke-width:2px
+    style I fill:#ffe1e1,stroke:#ff0000,stroke-width:2px
+    style N fill:#e1ffe1,stroke:#00ff00,stroke-width:2px
+    style Success fill:#e1f5ff
+    style Cancel fill:#f5f5f5
+    style Q fill:#f5f5f5
+    
+    classDef validation fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    classDef success fill:#e1ffe1,stroke:#00ff00,stroke-width:2px
+    classDef error fill:#ffe1e1,stroke:#ff0000,stroke-width:2px

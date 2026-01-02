@@ -1,0 +1,92 @@
+%% Use Case Diagram - Inventory Management System
+graph TB
+    subgraph System["Inventory Management System"]
+        subgraph Administration["Administration"]
+            UC1[Manage Store Settings]
+            UC2[Manage LOVs]
+            UC3[Configure System Rules]
+        end
+        
+        subgraph CatalogManagement["Catalog & Inventory Setup"]
+            UC4[Manage Items]
+            UC5[Manage Categories]
+            UC6[Manage Units of Measure]
+            UC7[Manage Suppliers]
+        end
+        
+        subgraph OrderProcessing["Order Processing"]
+            UC8[Create Sales Order]
+            UC9[Approve Order]
+            UC10[Process Order Delivery]
+            UC11[Manage Payment Terms]
+        end
+        
+        subgraph Purchasing["Purchasing & Receiving"]
+            UC12[Create Purchase Order]
+            UC13[Receive Purchase]
+            UC14[Update Item Costs]
+        end
+        
+        subgraph InventoryControl["Inventory Control"]
+            UC15[Perform Inventory Count]
+            UC16[Adjust Stock Levels]
+            UC17[View Stock History]
+            UC18[Generate Inventory Reports]
+        end
+    end
+    
+    %% Actors
+    Admin((Administrator))
+    InventoryMgr((Inventory Manager))
+    SalesUser((Sales User))
+    PurchaseUser((Purchasing User))
+    
+    %% Administrator Use Cases
+    Admin --> UC1
+    Admin --> UC2
+    Admin --> UC3
+    Admin --> UC5
+    Admin --> UC6
+    
+    %% Inventory Manager Use Cases
+    InventoryMgr --> UC4
+    InventoryMgr --> UC7
+    InventoryMgr --> UC15
+    InventoryMgr --> UC16
+    InventoryMgr --> UC17
+    InventoryMgr --> UC18
+    
+    %% Sales User Use Cases
+    SalesUser --> UC8
+    SalesUser --> UC10
+    SalesUser --> UC17
+    
+    %% Purchasing User Use Cases
+    PurchaseUser --> UC12
+    PurchaseUser --> UC13
+    PurchaseUser --> UC14
+    PurchaseUser --> UC7
+    
+    %% Shared Use Cases
+    Admin --> UC9
+    InventoryMgr --> UC9
+    
+    %% Include/Extend Relationships
+    UC8 -.->|includes| UC11
+    UC8 -.->|validates| UC3
+    UC13 -.->|includes| UC14
+    UC15 -.->|includes| UC16
+    UC16 -.->|creates| UC17
+    UC10 -.->|creates| UC17
+    UC13 -.->|creates| UC17
+    
+    style UC1 fill:#e1f5ff
+    style UC2 fill:#e1f5ff
+    style UC3 fill:#e1f5ff
+    style UC8 fill:#fff4e1
+    style UC9 fill:#fff4e1
+    style UC10 fill:#fff4e1
+    style UC12 fill:#e1ffe1
+    style UC13 fill:#e1ffe1
+    style UC15 fill:#ffe1f5
+    style UC16 fill:#ffe1f5

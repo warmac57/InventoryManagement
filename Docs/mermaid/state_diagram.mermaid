@@ -1,0 +1,118 @@
+graph TB
+    subgraph OrderLifecycle["Order Status Lifecycle"]
+        O1([Start]) --> O2[Draft]
+        O2 --> O3{Submit Order?}
+        O3 -->|Yes| O4[Submitted]
+        O3 -->|Cancel| O_Cancel1[Cancelled]
+        
+        O4 --> O5{★ Stock Validation<br/>In_Stock_Check}
+        O5 -->|Failed| O6[Validation Failed]
+        O6 --> O7{Action?}
+        O7 -->|Fix Items| O2
+        O7 -->|Cancel| O_Cancel2[Cancelled]
+        
+        O5 -->|Passed| O8{Approval Required?}
+        O8 -->|No| O10[Ready]
+        O8 -->|Yes| O9[Pending Approval]
+        
+        O9 --> O_Approve{Approve?}
+        O_Approve -->|Reject| O2
+        O_Approve -->|Approve| O10
+        
+        O10 --> O11[Processing Delivery]
+        O11 --> O12[★ Update Stock<br/>Create History]
+        O12 --> O13[Delivered]
+        O13 --> O14([End])
+        
+        O_Cancel1 --> O_End1([End])
+        O_Cancel2 --> O_End2([End])
+    end
+    
+    subgraph PurchaseLifecycle["Purchase Status Lifecycle"]
+        P1([Start]) --> P2[Draft]
+        P2 --> P3{Submit PO?}
+        P3 -->|Yes| P4[Submitted]
+        P3 -->|Cancel| P_Cancel1[Cancelled]
+        
+        P4 --> P5[Approved]
+        P5 --> P6[Sent to Supplier]
+        
+        P6 --> P7{Goods Received?}
+        P7 -->|Partial| P8[Partially Received]
+        P7 -->|Full| P9[Receiving]
+        
+        P8 --> P7
+        
+        P9 --> P10[★ Moving Average<br/>Calculation]
+        P10 --> P11[★ Update Stock<br/>& Cost]
+        P11 --> P12[★ Create History]
+        P12 --> P13[Received]
+        
+        P13 --> P14{Invoice Match?}
+        P14 -->|Yes| P15[Completed]
+        P14 -->|Discrepancy| P16[Under Review]
+        P16 --> P17{Resolve?}
+        P17 -->|Resolved| P15
+        P17 -->|Adjust| P9
+        
+        P15 --> P18([End])
+        P_Cancel1 --> P_End1([End])
+    end
+    
+    subgraph CountLifecycle["Inventory Count Lifecycle"]
+        C1([Start]) --> C2[Count Initiated]
+        C2 --> C3[In Progress]
+        
+        C3 --> C4{All Items<br/>Counted?}
+        C4 -->|No| C3
+        C4 -->|Yes| C5[Count Complete]
+        
+        C5 --> C6[★ Calculate<br/>Variances]
+        C6 --> C7{Review<br/>Variances?}
+        
+        C7 -->|Recount Required| C3
+        C7 -->|Approve| C8{★ Check<br/>Negative Stock}
+        
+        C8 -->|Allowed| C10[Apply Adjustments]
+        C8 -->|Blocked| C9[Flagged for Review]
+        C9 --> C11{Admin Override?}
+        C11 -->|Yes| C10
+        C11 -->|No| C12[Cancelled]
+        
+        C10 --> C13[★ Update Stock]
+        C13 --> C14[★ Create History]
+        C14 --> C15[Applied]
+        
+        C15 --> C16([End])
+        C12 --> C_End1([End])
+    end
+    
+    %% Styling
+    style O5 fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    style O12 fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style P10 fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    style P11 fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style P12 fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style C6 fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style C8 fill:#ffe1e1,stroke:#ff0000,stroke-width:3px
+    style C13 fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    style C14 fill:#fff4e1,stroke:#ffa500,stroke-width:2px
+    
+    style O2 fill:#e1f5ff
+    style O4 fill:#e1f5ff
+    style O10 fill:#fff4e1
+    style O13 fill:#e1ffe1
+    style O_Cancel1 fill:#ffe1e1
+    style O_Cancel2 fill:#ffe1e1
+    
+    style P2 fill:#e1f5ff
+    style P4 fill:#e1f5ff
+    style P6 fill:#fff4e1
+    style P13 fill:#fff4e1
+    style P15 fill:#e1ffe1
+    
+    style C2 fill:#e1f5ff
+    style C3 fill:#fff4e1
+    style C5 fill:#fff4e1
+    style C15 fill:#e1ffe1
+    style C12 fill:#ffe1e1

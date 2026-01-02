@@ -1,0 +1,42 @@
+classDiagram
+    %% CORE ADMINISTRATION & SETTINGS
+    
+    class User {
+        +Int32 User_ID
+        +String Username
+        +String Password_Hash
+        +String Role
+        +Boolean Is_Active
+        +Login() Boolean
+        +Logout()
+    }
+
+    class StoreSettings {
+        +Int32 Setting_ID
+        +String Setting_Name
+        +String Setting_Value
+        +Boolean Negative_Stock_Allowed
+        +Boolean In_Stock_Check
+        +Boolean Moving_Average_Price
+        +GetSetting(name) String
+        +UpdateSetting(name, value)
+    }
+
+    class LOV {
+        +Int32 LOV_ID
+        +String LOV_Type
+        +String LOV_Code
+        +String LOV_Value
+        +Boolean Is_Active
+        +GetByType(type) List~LOV~
+    }
+
+    class PaymentTerm {
+        +Int32 Payment_Term_ID
+        +String Term_Code
+        +String Term_Description
+        +Int32 Days_Due
+        +Decimal Discount_Percent
+    }
+
+    note for StoreSettings "★ Critical Settings:\n• In_Stock_Check\n• Negative_Stock_Allowed\n• Moving_Average_Price"
