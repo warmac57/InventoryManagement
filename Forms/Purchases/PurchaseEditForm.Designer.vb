@@ -19,349 +19,349 @@ Namespace Forms.Purchases
 
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
-            Me.pnlHeader = New DevExpress.XtraEditors.PanelControl()
-            Me.lblPONumber = New DevExpress.XtraEditors.LabelControl()
-            Me.txtPurchaseNumber = New DevExpress.XtraEditors.TextEdit()
-            Me.lblPODate = New DevExpress.XtraEditors.LabelControl()
-            Me.dtpPurchaseDate = New DevExpress.XtraEditors.DateEdit()
-            Me.lblExpected = New DevExpress.XtraEditors.LabelControl()
-            Me.dtpExpectedDate = New DevExpress.XtraEditors.DateEdit()
-            Me.lblSupplier = New DevExpress.XtraEditors.LabelControl()
-            Me.cboSupplier = New DevExpress.XtraEditors.LookUpEdit()
-            Me.lblNotes = New DevExpress.XtraEditors.LabelControl()
-            Me.txtNotes = New DevExpress.XtraEditors.MemoEdit()
-            Me.pnlTotals = New DevExpress.XtraEditors.PanelControl()
-            Me.lblSubtotal = New DevExpress.XtraEditors.LabelControl()
-            Me.txtSubtotal = New DevExpress.XtraEditors.TextEdit()
-            Me.lblTax = New DevExpress.XtraEditors.LabelControl()
-            Me.txtTax = New DevExpress.XtraEditors.TextEdit()
-            Me.lblTotal = New DevExpress.XtraEditors.LabelControl()
-            Me.txtTotal = New DevExpress.XtraEditors.TextEdit()
-            Me.btnAddItem = New DevExpress.XtraEditors.SimpleButton()
-            Me.btnRemoveItem = New DevExpress.XtraEditors.SimpleButton()
-            Me.pnlButtons = New DevExpress.XtraEditors.PanelControl()
-            Me.btnSave = New DevExpress.XtraEditors.SimpleButton()
-            Me.btnApprove = New DevExpress.XtraEditors.SimpleButton()
-            Me.btnReceive = New DevExpress.XtraEditors.SimpleButton()
-            Me.btnCancel = New DevExpress.XtraEditors.SimpleButton()
-            Me.btnClose = New DevExpress.XtraEditors.SimpleButton()
-            Me.gridItems = New DevExpress.XtraGrid.GridControl()
-            Me.gridViewItems = New DevExpress.XtraGrid.Views.Grid.GridView()
-            CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.pnlHeader.SuspendLayout()
-            CType(Me.txtPurchaseNumber.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dtpPurchaseDate.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dtpPurchaseDate.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dtpExpectedDate.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.dtpExpectedDate.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.cboSupplier.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.txtNotes.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.pnlTotals, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.pnlTotals.SuspendLayout()
-            CType(Me.txtSubtotal.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.txtTax.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.txtTotal.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.pnlButtons, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.pnlButtons.SuspendLayout()
-            CType(Me.gridItems, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.gridViewItems, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.SuspendLayout()
-            '
+            pnlHeader = New PanelControl()
+            txtNotes = New MemoEdit()
+            lblNotes = New LabelControl()
+            cboSupplier = New LookUpEdit()
+            lblSupplier = New LabelControl()
+            dtpExpectedDate = New DateEdit()
+            lblExpected = New LabelControl()
+            dtpPurchaseDate = New DateEdit()
+            lblPODate = New LabelControl()
+            txtPurchaseNumber = New TextEdit()
+            lblPONumber = New LabelControl()
+            pnlTotals = New PanelControl()
+            btnRemoveItem = New SimpleButton()
+            btnAddItem = New SimpleButton()
+            txtTotal = New TextEdit()
+            lblTotal = New LabelControl()
+            txtTax = New TextEdit()
+            lblTax = New LabelControl()
+            txtSubtotal = New TextEdit()
+            lblSubtotal = New LabelControl()
+            pnlButtons = New PanelControl()
+            btnClose = New SimpleButton()
+            btnCancel = New SimpleButton()
+            btnReceive = New SimpleButton()
+            btnApprove = New SimpleButton()
+            btnSave = New SimpleButton()
+            gridItems = New DevExpress.XtraGrid.GridControl()
+            gridViewItems = New DevExpress.XtraGrid.Views.Grid.GridView()
+            CType(pnlHeader, ComponentModel.ISupportInitialize).BeginInit()
+            pnlHeader.SuspendLayout()
+            CType(txtNotes.Properties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(cboSupplier.Properties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(dtpExpectedDate.Properties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(dtpExpectedDate.Properties.CalendarTimeProperties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(dtpPurchaseDate.Properties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(dtpPurchaseDate.Properties.CalendarTimeProperties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(txtPurchaseNumber.Properties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(pnlTotals, ComponentModel.ISupportInitialize).BeginInit()
+            pnlTotals.SuspendLayout()
+            CType(txtTotal.Properties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(txtTax.Properties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(txtSubtotal.Properties, ComponentModel.ISupportInitialize).BeginInit()
+            CType(pnlButtons, ComponentModel.ISupportInitialize).BeginInit()
+            pnlButtons.SuspendLayout()
+            CType(gridItems, ComponentModel.ISupportInitialize).BeginInit()
+            CType(gridViewItems, ComponentModel.ISupportInitialize).BeginInit()
+            SuspendLayout()
+            ' 
             ' pnlHeader
-            '
-            Me.pnlHeader.Controls.Add(Me.txtNotes)
-            Me.pnlHeader.Controls.Add(Me.lblNotes)
-            Me.pnlHeader.Controls.Add(Me.cboSupplier)
-            Me.pnlHeader.Controls.Add(Me.lblSupplier)
-            Me.pnlHeader.Controls.Add(Me.dtpExpectedDate)
-            Me.pnlHeader.Controls.Add(Me.lblExpected)
-            Me.pnlHeader.Controls.Add(Me.dtpPurchaseDate)
-            Me.pnlHeader.Controls.Add(Me.lblPODate)
-            Me.pnlHeader.Controls.Add(Me.txtPurchaseNumber)
-            Me.pnlHeader.Controls.Add(Me.lblPONumber)
-            Me.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top
-            Me.pnlHeader.Location = New System.Drawing.Point(0, 0)
-            Me.pnlHeader.Name = "pnlHeader"
-            Me.pnlHeader.Size = New System.Drawing.Size(884, 130)
-            Me.pnlHeader.TabIndex = 0
-            '
-            ' lblPONumber
-            '
-            Me.lblPONumber.Location = New System.Drawing.Point(20, 18)
-            Me.lblPONumber.Name = "lblPONumber"
-            Me.lblPONumber.Size = New System.Drawing.Size(57, 13)
-            Me.lblPONumber.TabIndex = 0
-            Me.lblPONumber.Text = "PO Number:"
-            '
-            ' txtPurchaseNumber
-            '
-            Me.txtPurchaseNumber.Location = New System.Drawing.Point(100, 15)
-            Me.txtPurchaseNumber.Name = "txtPurchaseNumber"
-            Me.txtPurchaseNumber.Properties.ReadOnly = True
-            Me.txtPurchaseNumber.Size = New System.Drawing.Size(150, 20)
-            Me.txtPurchaseNumber.TabIndex = 1
-            '
-            ' lblPODate
-            '
-            Me.lblPODate.Location = New System.Drawing.Point(280, 18)
-            Me.lblPODate.Name = "lblPODate"
-            Me.lblPODate.Size = New System.Drawing.Size(44, 13)
-            Me.lblPODate.TabIndex = 2
-            Me.lblPODate.Text = "PO Date:"
-            '
-            ' dtpPurchaseDate
-            '
-            Me.dtpPurchaseDate.EditValue = Nothing
-            Me.dtpPurchaseDate.Location = New System.Drawing.Point(340, 15)
-            Me.dtpPurchaseDate.Name = "dtpPurchaseDate"
-            Me.dtpPurchaseDate.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.dtpPurchaseDate.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.dtpPurchaseDate.Size = New System.Drawing.Size(120, 20)
-            Me.dtpPurchaseDate.TabIndex = 3
-            '
-            ' lblExpected
-            '
-            Me.lblExpected.Location = New System.Drawing.Point(500, 18)
-            Me.lblExpected.Name = "lblExpected"
-            Me.lblExpected.Size = New System.Drawing.Size(50, 13)
-            Me.lblExpected.TabIndex = 4
-            Me.lblExpected.Text = "Expected:"
-            '
-            ' dtpExpectedDate
-            '
-            Me.dtpExpectedDate.EditValue = Nothing
-            Me.dtpExpectedDate.Location = New System.Drawing.Point(565, 15)
-            Me.dtpExpectedDate.Name = "dtpExpectedDate"
-            Me.dtpExpectedDate.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.dtpExpectedDate.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.dtpExpectedDate.Size = New System.Drawing.Size(120, 20)
-            Me.dtpExpectedDate.TabIndex = 5
-            '
-            ' lblSupplier
-            '
-            Me.lblSupplier.Location = New System.Drawing.Point(20, 53)
-            Me.lblSupplier.Name = "lblSupplier"
-            Me.lblSupplier.Size = New System.Drawing.Size(42, 13)
-            Me.lblSupplier.TabIndex = 6
-            Me.lblSupplier.Text = "Supplier:"
-            '
-            ' cboSupplier
-            '
-            Me.cboSupplier.Location = New System.Drawing.Point(100, 50)
-            Me.cboSupplier.Name = "cboSupplier"
-            Me.cboSupplier.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-            Me.cboSupplier.Properties.DisplayMember = "Supplier_Name"
-            Me.cboSupplier.Properties.NullText = "[Select Supplier]"
-            Me.cboSupplier.Properties.ValueMember = "Supplier_ID"
-            Me.cboSupplier.Size = New System.Drawing.Size(300, 20)
-            Me.cboSupplier.TabIndex = 7
-            '
-            ' lblNotes
-            '
-            Me.lblNotes.Location = New System.Drawing.Point(20, 88)
-            Me.lblNotes.Name = "lblNotes"
-            Me.lblNotes.Size = New System.Drawing.Size(31, 13)
-            Me.lblNotes.TabIndex = 8
-            Me.lblNotes.Text = "Notes:"
-            '
+            ' 
+            pnlHeader.Controls.Add(txtNotes)
+            pnlHeader.Controls.Add(lblNotes)
+            pnlHeader.Controls.Add(cboSupplier)
+            pnlHeader.Controls.Add(lblSupplier)
+            pnlHeader.Controls.Add(dtpExpectedDate)
+            pnlHeader.Controls.Add(lblExpected)
+            pnlHeader.Controls.Add(dtpPurchaseDate)
+            pnlHeader.Controls.Add(lblPODate)
+            pnlHeader.Controls.Add(txtPurchaseNumber)
+            pnlHeader.Controls.Add(lblPONumber)
+            pnlHeader.Dock = System.Windows.Forms.DockStyle.Top
+            pnlHeader.Location = New System.Drawing.Point(0, 0)
+            pnlHeader.Name = "pnlHeader"
+            pnlHeader.Size = New System.Drawing.Size(884, 130)
+            pnlHeader.TabIndex = 0
+            ' 
             ' txtNotes
-            '
-            Me.txtNotes.Location = New System.Drawing.Point(100, 85)
-            Me.txtNotes.Name = "txtNotes"
-            Me.txtNotes.Size = New System.Drawing.Size(585, 40)
-            Me.txtNotes.TabIndex = 9
-            '
+            ' 
+            txtNotes.Location = New System.Drawing.Point(100, 85)
+            txtNotes.Name = "txtNotes"
+            txtNotes.Size = New System.Drawing.Size(585, 40)
+            txtNotes.TabIndex = 9
+            ' 
+            ' lblNotes
+            ' 
+            lblNotes.Location = New System.Drawing.Point(20, 88)
+            lblNotes.Name = "lblNotes"
+            lblNotes.Size = New System.Drawing.Size(32, 13)
+            lblNotes.TabIndex = 8
+            lblNotes.Text = "Notes:"
+            ' 
+            ' cboSupplier
+            ' 
+            cboSupplier.Location = New System.Drawing.Point(100, 50)
+            cboSupplier.Name = "cboSupplier"
+            cboSupplier.Properties.Buttons.AddRange(New Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            cboSupplier.Properties.DisplayMember = "Supplier_Name"
+            cboSupplier.Properties.NullText = "[Select Supplier]"
+            cboSupplier.Properties.ValueMember = "Supplier_ID"
+            cboSupplier.Size = New System.Drawing.Size(300, 20)
+            cboSupplier.TabIndex = 7
+            ' 
+            ' lblSupplier
+            ' 
+            lblSupplier.Location = New System.Drawing.Point(20, 53)
+            lblSupplier.Name = "lblSupplier"
+            lblSupplier.Size = New System.Drawing.Size(42, 13)
+            lblSupplier.TabIndex = 6
+            lblSupplier.Text = "Supplier:"
+            ' 
+            ' dtpExpectedDate
+            ' 
+            dtpExpectedDate.EditValue = Nothing
+            dtpExpectedDate.Location = New System.Drawing.Point(565, 15)
+            dtpExpectedDate.Name = "dtpExpectedDate"
+            dtpExpectedDate.Properties.Buttons.AddRange(New Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            dtpExpectedDate.Properties.CalendarTimeProperties.Buttons.AddRange(New Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            dtpExpectedDate.Size = New System.Drawing.Size(120, 20)
+            dtpExpectedDate.TabIndex = 5
+            ' 
+            ' lblExpected
+            ' 
+            lblExpected.Location = New System.Drawing.Point(500, 18)
+            lblExpected.Name = "lblExpected"
+            lblExpected.Size = New System.Drawing.Size(49, 13)
+            lblExpected.TabIndex = 4
+            lblExpected.Text = "Expected:"
+            ' 
+            ' dtpPurchaseDate
+            ' 
+            dtpPurchaseDate.EditValue = Nothing
+            dtpPurchaseDate.Location = New System.Drawing.Point(340, 15)
+            dtpPurchaseDate.Name = "dtpPurchaseDate"
+            dtpPurchaseDate.Properties.Buttons.AddRange(New Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            dtpPurchaseDate.Properties.CalendarTimeProperties.Buttons.AddRange(New Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+            dtpPurchaseDate.Size = New System.Drawing.Size(120, 20)
+            dtpPurchaseDate.TabIndex = 3
+            ' 
+            ' lblPODate
+            ' 
+            lblPODate.Location = New System.Drawing.Point(280, 18)
+            lblPODate.Name = "lblPODate"
+            lblPODate.Size = New System.Drawing.Size(44, 13)
+            lblPODate.TabIndex = 2
+            lblPODate.Text = "PO Date:"
+            ' 
+            ' txtPurchaseNumber
+            ' 
+            txtPurchaseNumber.Location = New System.Drawing.Point(100, 15)
+            txtPurchaseNumber.Name = "txtPurchaseNumber"
+            txtPurchaseNumber.Properties.ReadOnly = True
+            txtPurchaseNumber.Size = New System.Drawing.Size(150, 20)
+            txtPurchaseNumber.TabIndex = 1
+            ' 
+            ' lblPONumber
+            ' 
+            lblPONumber.Location = New System.Drawing.Point(20, 18)
+            lblPONumber.Name = "lblPONumber"
+            lblPONumber.Size = New System.Drawing.Size(58, 13)
+            lblPONumber.TabIndex = 0
+            lblPONumber.Text = "PO Number:"
+            ' 
             ' pnlTotals
-            '
-            Me.pnlTotals.Controls.Add(Me.btnRemoveItem)
-            Me.pnlTotals.Controls.Add(Me.btnAddItem)
-            Me.pnlTotals.Controls.Add(Me.txtTotal)
-            Me.pnlTotals.Controls.Add(Me.lblTotal)
-            Me.pnlTotals.Controls.Add(Me.txtTax)
-            Me.pnlTotals.Controls.Add(Me.lblTax)
-            Me.pnlTotals.Controls.Add(Me.txtSubtotal)
-            Me.pnlTotals.Controls.Add(Me.lblSubtotal)
-            Me.pnlTotals.Dock = System.Windows.Forms.DockStyle.Right
-            Me.pnlTotals.Location = New System.Drawing.Point(684, 130)
-            Me.pnlTotals.Name = "pnlTotals"
-            Me.pnlTotals.Size = New System.Drawing.Size(200, 370)
-            Me.pnlTotals.TabIndex = 1
-            '
-            ' lblSubtotal
-            '
-            Me.lblSubtotal.Location = New System.Drawing.Point(20, 23)
-            Me.lblSubtotal.Name = "lblSubtotal"
-            Me.lblSubtotal.Size = New System.Drawing.Size(43, 13)
-            Me.lblSubtotal.TabIndex = 0
-            Me.lblSubtotal.Text = "Subtotal:"
-            '
-            ' txtSubtotal
-            '
-            Me.txtSubtotal.Location = New System.Drawing.Point(90, 20)
-            Me.txtSubtotal.Name = "txtSubtotal"
-            Me.txtSubtotal.Properties.DisplayFormat.FormatString = "C2"
-            Me.txtSubtotal.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            Me.txtSubtotal.Properties.ReadOnly = True
-            Me.txtSubtotal.Size = New System.Drawing.Size(90, 20)
-            Me.txtSubtotal.TabIndex = 1
-            '
-            ' lblTax
-            '
-            Me.lblTax.Location = New System.Drawing.Point(20, 53)
-            Me.lblTax.Name = "lblTax"
-            Me.lblTax.Size = New System.Drawing.Size(18, 13)
-            Me.lblTax.TabIndex = 2
-            Me.lblTax.Text = "Tax:"
-            '
-            ' txtTax
-            '
-            Me.txtTax.Location = New System.Drawing.Point(90, 50)
-            Me.txtTax.Name = "txtTax"
-            Me.txtTax.Properties.DisplayFormat.FormatString = "C2"
-            Me.txtTax.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            Me.txtTax.Properties.ReadOnly = True
-            Me.txtTax.Size = New System.Drawing.Size(90, 20)
-            Me.txtTax.TabIndex = 3
-            '
-            ' lblTotal
-            '
-            Me.lblTotal.Location = New System.Drawing.Point(20, 83)
-            Me.lblTotal.Name = "lblTotal"
-            Me.lblTotal.Size = New System.Drawing.Size(27, 13)
-            Me.lblTotal.TabIndex = 4
-            Me.lblTotal.Text = "Total:"
-            '
-            ' txtTotal
-            '
-            Me.txtTotal.Location = New System.Drawing.Point(90, 80)
-            Me.txtTotal.Name = "txtTotal"
-            Me.txtTotal.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
-            Me.txtTotal.Properties.Appearance.Options.UseFont = True
-            Me.txtTotal.Properties.DisplayFormat.FormatString = "C2"
-            Me.txtTotal.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            Me.txtTotal.Properties.ReadOnly = True
-            Me.txtTotal.Size = New System.Drawing.Size(90, 20)
-            Me.txtTotal.TabIndex = 5
-            '
-            ' btnAddItem
-            '
-            Me.btnAddItem.Location = New System.Drawing.Point(20, 130)
-            Me.btnAddItem.Name = "btnAddItem"
-            Me.btnAddItem.Size = New System.Drawing.Size(80, 25)
-            Me.btnAddItem.TabIndex = 6
-            Me.btnAddItem.Text = "Add Item"
-            '
+            ' 
+            pnlTotals.Controls.Add(btnRemoveItem)
+            pnlTotals.Controls.Add(btnAddItem)
+            pnlTotals.Controls.Add(txtTotal)
+            pnlTotals.Controls.Add(lblTotal)
+            pnlTotals.Controls.Add(txtTax)
+            pnlTotals.Controls.Add(lblTax)
+            pnlTotals.Controls.Add(txtSubtotal)
+            pnlTotals.Controls.Add(lblSubtotal)
+            pnlTotals.Dock = System.Windows.Forms.DockStyle.Right
+            pnlTotals.Location = New System.Drawing.Point(684, 130)
+            pnlTotals.Name = "pnlTotals"
+            pnlTotals.Size = New System.Drawing.Size(200, 370)
+            pnlTotals.TabIndex = 1
+            ' 
             ' btnRemoveItem
-            '
-            Me.btnRemoveItem.Location = New System.Drawing.Point(105, 130)
-            Me.btnRemoveItem.Name = "btnRemoveItem"
-            Me.btnRemoveItem.Size = New System.Drawing.Size(80, 25)
-            Me.btnRemoveItem.TabIndex = 7
-            Me.btnRemoveItem.Text = "Remove"
-            '
+            ' 
+            btnRemoveItem.Location = New System.Drawing.Point(105, 130)
+            btnRemoveItem.Name = "btnRemoveItem"
+            btnRemoveItem.Size = New System.Drawing.Size(80, 25)
+            btnRemoveItem.TabIndex = 7
+            btnRemoveItem.Text = "Remove"
+            ' 
+            ' btnAddItem
+            ' 
+            btnAddItem.Location = New System.Drawing.Point(20, 130)
+            btnAddItem.Name = "btnAddItem"
+            btnAddItem.Size = New System.Drawing.Size(80, 25)
+            btnAddItem.TabIndex = 6
+            btnAddItem.Text = "Add Item"
+            ' 
+            ' txtTotal
+            ' 
+            txtTotal.Location = New System.Drawing.Point(90, 80)
+            txtTotal.Name = "txtTotal"
+            txtTotal.Properties.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold)
+            txtTotal.Properties.Appearance.Options.UseFont = True
+            txtTotal.Properties.DisplayFormat.FormatString = "C2"
+            txtTotal.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            txtTotal.Properties.ReadOnly = True
+            txtTotal.Size = New System.Drawing.Size(90, 20)
+            txtTotal.TabIndex = 5
+            ' 
+            ' lblTotal
+            ' 
+            lblTotal.Location = New System.Drawing.Point(20, 83)
+            lblTotal.Name = "lblTotal"
+            lblTotal.Size = New System.Drawing.Size(28, 13)
+            lblTotal.TabIndex = 4
+            lblTotal.Text = "Total:"
+            ' 
+            ' txtTax
+            ' 
+            txtTax.Location = New System.Drawing.Point(90, 50)
+            txtTax.Name = "txtTax"
+            txtTax.Properties.DisplayFormat.FormatString = "C2"
+            txtTax.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            txtTax.Properties.ReadOnly = True
+            txtTax.Size = New System.Drawing.Size(90, 20)
+            txtTax.TabIndex = 3
+            ' 
+            ' lblTax
+            ' 
+            lblTax.Location = New System.Drawing.Point(20, 53)
+            lblTax.Name = "lblTax"
+            lblTax.Size = New System.Drawing.Size(22, 13)
+            lblTax.TabIndex = 2
+            lblTax.Text = "Tax:"
+            ' 
+            ' txtSubtotal
+            ' 
+            txtSubtotal.Location = New System.Drawing.Point(90, 20)
+            txtSubtotal.Name = "txtSubtotal"
+            txtSubtotal.Properties.DisplayFormat.FormatString = "C2"
+            txtSubtotal.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            txtSubtotal.Properties.ReadOnly = True
+            txtSubtotal.Size = New System.Drawing.Size(90, 20)
+            txtSubtotal.TabIndex = 1
+            ' 
+            ' lblSubtotal
+            ' 
+            lblSubtotal.Location = New System.Drawing.Point(20, 23)
+            lblSubtotal.Name = "lblSubtotal"
+            lblSubtotal.Size = New System.Drawing.Size(44, 13)
+            lblSubtotal.TabIndex = 0
+            lblSubtotal.Text = "Subtotal:"
+            ' 
             ' pnlButtons
-            '
-            Me.pnlButtons.Controls.Add(Me.btnClose)
-            Me.pnlButtons.Controls.Add(Me.btnCancel)
-            Me.pnlButtons.Controls.Add(Me.btnReceive)
-            Me.pnlButtons.Controls.Add(Me.btnApprove)
-            Me.pnlButtons.Controls.Add(Me.btnSave)
-            Me.pnlButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-            Me.pnlButtons.Location = New System.Drawing.Point(0, 500)
-            Me.pnlButtons.Name = "pnlButtons"
-            Me.pnlButtons.Size = New System.Drawing.Size(884, 50)
-            Me.pnlButtons.TabIndex = 2
-            '
-            ' btnSave
-            '
-            Me.btnSave.Location = New System.Drawing.Point(20, 10)
-            Me.btnSave.Name = "btnSave"
-            Me.btnSave.Size = New System.Drawing.Size(80, 30)
-            Me.btnSave.TabIndex = 0
-            Me.btnSave.Text = "Save"
-            '
-            ' btnApprove
-            '
-            Me.btnApprove.Location = New System.Drawing.Point(110, 10)
-            Me.btnApprove.Name = "btnApprove"
-            Me.btnApprove.Size = New System.Drawing.Size(80, 30)
-            Me.btnApprove.TabIndex = 1
-            Me.btnApprove.Text = "Approve"
-            '
-            ' btnReceive
-            '
-            Me.btnReceive.Location = New System.Drawing.Point(200, 10)
-            Me.btnReceive.Name = "btnReceive"
-            Me.btnReceive.Size = New System.Drawing.Size(80, 30)
-            Me.btnReceive.TabIndex = 2
-            Me.btnReceive.Text = "Receive"
-            '
-            ' btnCancel
-            '
-            Me.btnCancel.Location = New System.Drawing.Point(290, 10)
-            Me.btnCancel.Name = "btnCancel"
-            Me.btnCancel.Size = New System.Drawing.Size(80, 30)
-            Me.btnCancel.TabIndex = 3
-            Me.btnCancel.Text = "Cancel PO"
-            '
+            ' 
+            pnlButtons.Controls.Add(btnClose)
+            pnlButtons.Controls.Add(btnCancel)
+            pnlButtons.Controls.Add(btnReceive)
+            pnlButtons.Controls.Add(btnApprove)
+            pnlButtons.Controls.Add(btnSave)
+            pnlButtons.Dock = System.Windows.Forms.DockStyle.Bottom
+            pnlButtons.Location = New System.Drawing.Point(0, 500)
+            pnlButtons.Name = "pnlButtons"
+            pnlButtons.Size = New System.Drawing.Size(884, 50)
+            pnlButtons.TabIndex = 2
+            ' 
             ' btnClose
-            '
-            Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnClose.Location = New System.Drawing.Point(784, 10)
-            Me.btnClose.Name = "btnClose"
-            Me.btnClose.Size = New System.Drawing.Size(80, 30)
-            Me.btnClose.TabIndex = 4
-            Me.btnClose.Text = "Close"
-            '
+            ' 
+            btnClose.Anchor = System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right
+            btnClose.Location = New System.Drawing.Point(784, 10)
+            btnClose.Name = "btnClose"
+            btnClose.Size = New System.Drawing.Size(80, 30)
+            btnClose.TabIndex = 4
+            btnClose.Text = "Close"
+            ' 
+            ' btnCancel
+            ' 
+            btnCancel.Location = New System.Drawing.Point(290, 10)
+            btnCancel.Name = "btnCancel"
+            btnCancel.Size = New System.Drawing.Size(80, 30)
+            btnCancel.TabIndex = 3
+            btnCancel.Text = "Cancel PO"
+            ' 
+            ' btnReceive
+            ' 
+            btnReceive.Location = New System.Drawing.Point(200, 10)
+            btnReceive.Name = "btnReceive"
+            btnReceive.Size = New System.Drawing.Size(80, 30)
+            btnReceive.TabIndex = 2
+            btnReceive.Text = "Receive"
+            ' 
+            ' btnApprove
+            ' 
+            btnApprove.Location = New System.Drawing.Point(110, 10)
+            btnApprove.Name = "btnApprove"
+            btnApprove.Size = New System.Drawing.Size(80, 30)
+            btnApprove.TabIndex = 1
+            btnApprove.Text = "Approve"
+            ' 
+            ' btnSave
+            ' 
+            btnSave.Location = New System.Drawing.Point(20, 10)
+            btnSave.Name = "btnSave"
+            btnSave.Size = New System.Drawing.Size(80, 30)
+            btnSave.TabIndex = 0
+            btnSave.Text = "Save"
+            ' 
             ' gridItems
-            '
-            Me.gridItems.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.gridItems.Location = New System.Drawing.Point(0, 130)
-            Me.gridItems.MainView = Me.gridViewItems
-            Me.gridItems.Name = "gridItems"
-            Me.gridItems.Size = New System.Drawing.Size(684, 370)
-            Me.gridItems.TabIndex = 3
-            Me.gridItems.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gridViewItems})
-            '
+            ' 
+            gridItems.Dock = System.Windows.Forms.DockStyle.Fill
+            gridItems.Location = New System.Drawing.Point(0, 130)
+            gridItems.MainView = gridViewItems
+            gridItems.Name = "gridItems"
+            gridItems.Size = New System.Drawing.Size(684, 370)
+            gridItems.TabIndex = 3
+            gridItems.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {gridViewItems})
+            ' 
             ' gridViewItems
-            '
-            Me.gridViewItems.GridControl = Me.gridItems
-            Me.gridViewItems.Name = "gridViewItems"
-            Me.gridViewItems.OptionsView.ShowGroupPanel = False
-            '
+            ' 
+            gridViewItems.GridControl = gridItems
+            gridViewItems.Name = "gridViewItems"
+            gridViewItems.OptionsView.ShowGroupPanel = False
+            ' 
             ' PurchaseEditForm
-            '
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-            Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(884, 550)
-            Me.Controls.Add(Me.gridItems)
-            Me.Controls.Add(Me.pnlTotals)
-            Me.Controls.Add(Me.pnlButtons)
-            Me.Controls.Add(Me.pnlHeader)
-            Me.Name = "PurchaseEditForm"
-            Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-            Me.Text = "Purchase Order"
-            CType(Me.pnlHeader, System.ComponentModel.ISupportInitialize).EndInit()
-            Me.pnlHeader.ResumeLayout(False)
-            Me.pnlHeader.PerformLayout()
-            CType(Me.txtPurchaseNumber.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dtpPurchaseDate.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dtpPurchaseDate.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dtpExpectedDate.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.dtpExpectedDate.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.cboSupplier.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.txtNotes.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.pnlTotals, System.ComponentModel.ISupportInitialize).EndInit()
-            Me.pnlTotals.ResumeLayout(False)
-            Me.pnlTotals.PerformLayout()
-            CType(Me.txtSubtotal.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.txtTax.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.txtTotal.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.pnlButtons, System.ComponentModel.ISupportInitialize).EndInit()
-            Me.pnlButtons.ResumeLayout(False)
-            CType(Me.gridItems, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.gridViewItems, System.ComponentModel.ISupportInitialize).EndInit()
-            Me.ResumeLayout(False)
+            ' 
+            AutoScaleDimensions = New System.Drawing.SizeF(6F, 13F)
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+            ClientSize = New System.Drawing.Size(884, 550)
+            Controls.Add(gridItems)
+            Controls.Add(pnlTotals)
+            Controls.Add(pnlButtons)
+            Controls.Add(pnlHeader)
+            Name = "PurchaseEditForm"
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+            Text = "Purchase Order"
+            CType(pnlHeader, ComponentModel.ISupportInitialize).EndInit()
+            pnlHeader.ResumeLayout(False)
+            pnlHeader.PerformLayout()
+            CType(txtNotes.Properties, ComponentModel.ISupportInitialize).EndInit()
+            CType(cboSupplier.Properties, ComponentModel.ISupportInitialize).EndInit()
+            CType(dtpExpectedDate.Properties.CalendarTimeProperties, ComponentModel.ISupportInitialize).EndInit()
+            CType(dtpExpectedDate.Properties, ComponentModel.ISupportInitialize).EndInit()
+            CType(dtpPurchaseDate.Properties.CalendarTimeProperties, ComponentModel.ISupportInitialize).EndInit()
+            CType(dtpPurchaseDate.Properties, ComponentModel.ISupportInitialize).EndInit()
+            CType(txtPurchaseNumber.Properties, ComponentModel.ISupportInitialize).EndInit()
+            CType(pnlTotals, ComponentModel.ISupportInitialize).EndInit()
+            pnlTotals.ResumeLayout(False)
+            pnlTotals.PerformLayout()
+            CType(txtTotal.Properties, ComponentModel.ISupportInitialize).EndInit()
+            CType(txtTax.Properties, ComponentModel.ISupportInitialize).EndInit()
+            CType(txtSubtotal.Properties, ComponentModel.ISupportInitialize).EndInit()
+            CType(pnlButtons, ComponentModel.ISupportInitialize).EndInit()
+            pnlButtons.ResumeLayout(False)
+            CType(gridItems, ComponentModel.ISupportInitialize).EndInit()
+            CType(gridViewItems, ComponentModel.ISupportInitialize).EndInit()
+            ResumeLayout(False)
         End Sub
 
         Friend WithEvents pnlHeader As DevExpress.XtraEditors.PanelControl
