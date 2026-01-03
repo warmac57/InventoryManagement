@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p:*)",
+      "Bash(dotnet build:*)",
+      "Bash(powershell:*)",
+      "Bash(find:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit - Inventory Management System\n\nComplete VB.NET inventory management application with:\n- Dashboard with live metrics and charts\n- User authentication with role-based access\n- Catalog management \\(Items, Categories, Suppliers\\)\n- Order processing with workflow states\n- Purchase order management\n- Inventory control \\(stock levels, counts, history\\)\n- Reports \\(inventory, orders, reorder alerts\\)\n- DevExpress WinForms 24.2 UI components\n- SQL Server database with full schema\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd CLAUDE.md project intelligence file\n\nDocumentation for Claude Code with project conventions:\n- 3-tier architecture overview\n- Coding conventions \\(naming, control prefixes\\)\n- LookUpEdit configuration pattern\n- Database access patterns with UPPERCASE table names\n- Build commands and project structure\n- DevExpress components reference\n- Common issues and solutions\n- Test credentials\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}
