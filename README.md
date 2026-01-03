@@ -197,4 +197,7 @@ The system uses 13 main tables:
 
 ## License
 
-This project requires a valid DevExpress WinForms license.
+- This project requires a valid DevExpress WinForms license.
+    - https://www.devexpress.com/products/net/controls/winforms/   
+- This project requires a valid DataModelPack license.
+    - https://datamodelpack.com/data-models/inventory-data-model.html
